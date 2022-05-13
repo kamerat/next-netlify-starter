@@ -2,7 +2,22 @@ import Head from 'next/head'
 import Header from '@components/Header'
 import Footer from '@components/Footer'
 
-export default function Home() {
+/**
+ * Redirects users landing on root to region based on cookie value
+ */
+function redirectRootToRegion() {
+    const rawCookies = ctx?.req?.headers?.cookie ?? '';
+    const region = 'no'
+
+    if (region) {
+        ctx.res.writeHead(302, {
+            Location: `/${region}`,
+        });
+        ctx.res.end();
+    }
+}
+
+function Home() {
   return (
     <div className="container">
       <Head>
@@ -21,3 +36,9 @@ export default function Home() {
     </div>
   )
 }
+
+Home.getInitialProps = async (ctx) => {
+    redirectRootToRegion(ctx);
+    return {};
+};
+export default Home

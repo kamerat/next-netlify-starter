@@ -5,7 +5,7 @@ import Footer from '@components/Footer'
 /**
  * Redirects users landing on root to region based on cookie value
  */
-function redirectRootToRegion() {
+function redirectRootToRegion(ctx) {
     const rawCookies = ctx?.req?.headers?.cookie ?? '';
     const region = 'no'
 
